@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ 
+body{
+    margin: 0;
+     background-color: #f0f0f0;
+ 
+ }
+  .mycontainer {
+      /* Assuming the image is located in the same directory as the CSS file   */
+      background: url('./assets/herosection/heroimage.jpg')   center center;  
+ }  
+  
+ 
+ code {
+   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+     monospace;
+ }

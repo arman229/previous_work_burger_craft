@@ -1,0 +1,69 @@
+'use client'
+import './globals.css'
+import {Header} from "@/components/Header";
+import {Footer} from "@/components/Footer";
+import {createContext, useRef, useState} from "react";
+import {CartItem} from "@/data/CartItems";
+import {MyContextType} from "@/utils/typedeclaration";
+
+
+export const MyContext = createContext<MyContextType>({
+    carts: [],
+    addToCart: (item: CartItem) => {
+    },
+    removeFromCart: (item: CartItem) => {
+    },
+    updateQuantity: (item: CartItem, newQuantity: number) => {
+    },
+});
+
+
+export default function RootLayout({children}: { children: React.ReactNode }) {
+    const [cartsState, setCarts] = useState<CartItem[]>([]);
+    const idCounter = useRef(1);
+    const addToCartInner = (item: CartItem) => {
+
+        const newItem = {
+            ...item,
+            burger: {
+                ...item.burger,
+                id: idCounter.current++
+            }
+        };
+        setCarts([...cartsState, newItem])
+
+    }
+    const removeFromCartInner = (item: CartItem) => {
+        const updatedCart = [...cartsState];
+        setCarts(updatedCart.filter((c) => c.burger.id !== item.burger.id));
+    }
+    const updateQuantityInner = (item: CartItem, newQuantity: number) => {
+        if (newQuantity >= 1) {
+            const updatedCart = [...cartsState];
+            const index = updatedCart.indexOf(item)
+            updatedCart[index].quantity = newQuantity;
+            setCarts(updatedCart);
+        }
+    }
+    return (
+        <html lang="en">
+        <body className={'max-w-screen-lg mx-auto   '}>
+        <div>
+            <MyContext.Provider value={{
+                carts: cartsState,
+                addToCart: addToCartInner,
+                removeFromCart: removeFromCartInner,
+                updateQuantity: updateQuantityInner
+            }
+            }>
+                <div className={'flex flex-col min-h-screen'}>
+                    <Header/>
+                    <div className={'flex-grow flex flex-col '}>{children}</div>
+                    <Footer/>
+                </div>
+            </MyContext.Provider>
+        </div>
+        </body>
+        </html>
+    )
+}

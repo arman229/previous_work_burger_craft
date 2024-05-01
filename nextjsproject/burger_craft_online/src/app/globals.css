@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+
+
+.customunderline:hover {
+    border-bottom: 2px solid black;
+}
+
+.customunderline.customunderlineactive {
+    border-bottom: 2px solid black;
+}
+@media screen and (max-width: 768px) {
+    .customunderline:hover{
+        border-bottom: none;
+    background-color: black}
+    .customunderline.customunderlineactive {
+        border-bottom: none;
+        background-color: lightgray;
+    }.customunderline.customunderlineactive:hover {
+         border-bottom: none;
+         background-color: lightgray;
+     }
+}
